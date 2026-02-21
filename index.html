@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SravSathishWorld - Our Special Chat 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff0f6 100%);
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 60px 50px;
+            border-radius: 30px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .login-container h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 48px;
+            background: linear-gradient(135deg, #ff6b9d, #c06c84);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .login-container p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            fontSize: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .login-btn.srav {
+            background: linear-gradient(135deg, #ff6b9d, #ffa5c0);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+        }
+
+        .login-btn.sathish {
+            background: linear-gradient(135deg, #6c5b7b, #8e7dbe);
+            box-shadow: 0 8px 25px rgba(108, 91, 123, 0.4);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 600px;
+            height: 90vh;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 70px rgba(192, 108, 132, 0.3);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .chat-container.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #ff6b9d, #c06c84);
+            padding: 20px 25px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .header-info h2 {
+            margin: 0;
+            fontSize: 20px;
+            font-weight: 600;
+        }
+
+        .status {
+            font-size: 13px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 3px;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: #cbd5e1;
+            border-radius: 50%;
+        }
+
+        .online-dot.active {
+            background: #4ade80;
+            animation: pulse 2s infinite;
+        }
+
+        .brand {
+            font-family: 'Pacifico', cursive;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .features-bar {
+            background: #fff0f6;
+            padding: 12px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            border-bottom: 1px solid #fce4ec;
+        }
+
+        .features-bar::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .features-bar::-webkit-scrollbar-thumb {
+            background: #ffc9dc;
+            border-radius: 10px;
+        }
+
+        .feature-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #fce4ec;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.3s;
+            color: #c06c84;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .feature-btn:hover {
+            background: linear-gradient(135deg, #ff6b9d, #c06c84);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #fafafa;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #ffc9dc;
+            border-radius: 10px;
+        }
+
+        .empty-chat {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-chat-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .message.sent {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .message.received .message-bubble {
+            background: white;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .message.sent .message-bubble {
+            background: linear-gradient(135deg, #ff6b9d, #c06c84);
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        .message.special .message-bubble::before {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }
+
+        .message-text {
+            margin-bottom: 6px;
+        }
+
+        .message-footer {
+            font-size: 11px;
+            opacity: 0.8;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tick {
+            font-size: 14px;
+        }
+
+        .tick.read {
+            color: #4ade80;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 18px;
+            width: fit-content;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .typing-indicator.active {
+            display: block;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #c06c84;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.16s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.32s;
+        }
+
+        .chat-input {
+            padding: 15px 20px;
+            background: white;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 25px;
+            padding: 10px 18px;
+        }
+
+        .input-field {
+            flex: 1;
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 15px;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .emoji-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: #e0e0e0;
+            color: white;
+            cursor: not-allowed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .send-btn.active {
+            background: linear-gradient(135deg, #ff6b9d, #c06c84);
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .send-btn.active:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 40px 30px;
+            }
+
+            .login-container h1 {
+                font-size: 36px;
+            }
+
+            .chat-container {
+                height: 100vh;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <h1>SravSathishWorld</h1>
+        <p>Our special place to connect 💕</p>
+        <button class="login-btn srav" onclick="login('Srav')">👩 Login as Srav</button>
+        <button class="login-btn sathish" onclick="login('Sathish')">👨 Login as Sathish</button>
+        <p style="font-size: 12px; color: #999; margin-top: 20px;">
+            Real-time messaging • Read receipts • Premium features
+        </p>
+    </div>
+
+    <!-- Chat Screen -->
+    <div class="chat-container" id="chatScreen">
+        <div class="chat-header">
+            <div class="header-left">
+                <div class="avatar" id="partnerAvatar">👨</div>
+                <div class="header-info">
+                    <h2 id="partnerName">Partner</h2>
+                    <div class="status">
+                        <div class="online-dot" id="onlineDot"></div>
+                        <span id="statusText">Offline</span>
+                    </div>
+                </div>
+            </div>
+            <div class="brand">SravSathishWorld</div>
+        </div>
+
+        <div class="features-bar">
+            <button class="feature-btn" onclick="sendSpecial('💝 Sent you all my love!')">💝 Love</button>
+            <button class="feature-btn" onclick="sendSpecial('🤗 Sending you a warm hug!')">🤗 Hug</button>
+            <button class="feature-btn" onclick="sendSpecial('💋 Blowing kisses your way!')">💋 Kiss</button>
+            <button class="feature-btn" onclick="sendSpecial('❤️ My heart beats for you!')">❤️ Heart</button>
+            <button class="feature-btn" onclick="sendSpecial('🎁 You deserve all the gifts in the world!')">🎁 Gift</button>
+            <button class="feature-btn" onclick="sendSpecial('🥺 Missing you so much right now!')">🥺 Miss You</button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="empty-chat" id="emptyChat">
+                <div class="empty-chat-icon">💕</div>
+                <p>Start your conversation!</p>
+                <p style="font-size: 14px; margin-top: 10px;">
+                    Send a message or use the premium features above
+                </p>
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+        </div>
+
+        <div class="chat-input">
+            <div class="input-wrapper">
+                <button class="emoji-btn" onclick="addEmoji()">😊</button>
+                <input 
+                    type="text" 
+                    class="input-field" 
+                    id="messageInput" 
+                    placeholder="Type a message..."
+                    onkeypress="handleKeyPress(event)"
+                    oninput="handleTyping()"
+                >
+            </div>
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = '';
+        let messages = [];
+        let checkInterval;
+
+        function login(username) {
+            currentUser = username;
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('chatScreen').classList.add('active');
+            
+            const partnerName = username === 'Srav' ? 'Sathish' : 'Srav';
+            const partnerAvatar = username === 'Srav' ? '👨' : '👩';
+            
+            document.getElementById('partnerName').textContent = partnerName;
+            document.getElementById('partnerAvatar').textContent = partnerAvatar;
+            
+            loadMessages();
+            updateOnlineStatus();
+            
+            checkInterval = setInterval(() => {
+                loadMessages();
+                updateOnlineStatus();
+                checkTypingStatus();
+            }, 1000);
+        }
+
+        function getTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            });
+        }
+
+        async function loadMessages() {
+            try {
+                const result = await window.storage.get('chat_messages', true);
+                if (result && result.value) {
+                    const serverMessages = JSON.parse(result.value);
+                    
+                    // Mark messages as read
+                    let updated = false;
+                    serverMessages.forEach(msg => {
+                        if (msg.sender !== currentUser && !msg.read) {
+                            msg.read = true;
+                            updated = true;
+                        }
+                    });
+                    
+                    if (updated) {
+                        await window.storage.set('chat_messages', JSON.stringify(serverMessages), true);
+                    }
+                    
+                    messages = serverMessages;
+                    renderMessages();
+                }
+            } catch (error) {
+                console.log('No messages yet');
+            }
+        }
+
+        async function saveMessages() {
+            try {
+                await window.storage.set('chat_messages', JSON.stringify(messages), true);
+            } catch (error) {
+                console.error('Error saving:', error);
+            }
+        }
+
+        function renderMessages() {
+            const container = document.getElementById('chatMessages');
+            const emptyChat = document.getElementById('emptyChat');
+            
+            if (messages.length === 0) {
+                emptyChat.style.display = 'block';
+                return;
+            }
+            
+            emptyChat.style.display = 'none';
+            
+            container.innerHTML = messages.map(msg => {
+                const isSent = msg.sender === currentUser;
+                const isSpecial = msg.type === 'special';
+                
+                let tickHtml = '';
+                if (isSent) {
+                    if (msg.read) {
+                        tickHtml = `<span class="tick read">✓✓</span>`;
+                    } else if (msg.delivered) {
+                        tickHtml = `<span class="tick">✓✓</span>`;
+                    } else {
+                        tickHtml = `<span class="tick">✓</span>`;
+                    }
+                }
+                
+                return `
+                    <div class="message ${isSent ? 'sent' : 'received'} ${isSpecial ? 'special' : ''}">
+                        <div class="message-bubble">
+                            <div class="message-text">${msg.text}</div>
+                            <div class="message-footer">
+                                <span>${msg.timestamp}</span>
+                                ${tickHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('') + '<div id="messagesEnd"></div>';
+            
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            const end = document.getElementById('messagesEnd');
+            if (end) {
+                end.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            const message = {
+                id: Date.now(),
+                text: text,
+                sender: currentUser,
+                timestamp: getTime(),
+                delivered: true,
+                read: false,
+                type: 'text'
+            };
+            
+            messages.push(message);
+            await saveMessages();
+            input.value = '';
+            updateSendButton();
+            renderMessages();
+        }
+
+        async function sendSpecial(text) {
+            const message = {
+                id: Date.now(),
+                text: text,
+                sender: currentUser,
+                timestamp: getTime(),
+                delivered: true,
+                read: false,
+                type: 'special'
+            };
+            
+            messages.push(message);
+            await saveMessages();
+            renderMessages();
+        }
+
+        async function handleTyping() {
+            updateSendButton();
+            
+            try {
+                await window.storage.set('typing_user', currentUser, true);
+                await window.storage.set('typing_timestamp', Date.now().toString(), true);
+            } catch (error) {
+                console.log('Error updating typing');
+            }
+        }
+
+        async function checkTypingStatus() {
+            try {
+                const typingUser = await window.storage.get('typing_user', true);
+                const typingTime = await window.storage.get('typing_timestamp', true);
+                
+                if (typingUser && typingTime) {
+                    const elapsed = Date.now() - parseInt(typingTime.value);
+                    if (typingUser.value !== currentUser && elapsed < 2000) {
+                        document.getElementById('typingIndicator').classList.add('active');
+                    } else {
+                        document.getElementById('typingIndicator').classList.remove('active');
+                    }
+                } else {
+                    document.getElementById('typingIndicator').classList.remove('active');
+                }
+            } catch (error) {
+                document.getElementById('typingIndicator').classList.remove('active');
+            }
+        }
+
+        async function updateOnlineStatus() {
+            try {
+                const timestamp = Date.now();
+                await window.storage.set(`user_${currentUser}_online`, timestamp.toString(), true);
+                
+                const partnerName = currentUser === 'Srav' ? 'Sathish' : 'Srav';
+                const partnerOnline = await window.storage.get(`user_${partnerName}_online`, true);
+                
+                const isOnline = partnerOnline && (Date.now() - parseInt(partnerOnline.value) < 3000);
+                
+                const dot = document.getElementById('onlineDot');
+                const status = document.getElementById('statusText');
+                
+                if (isOnline) {
+                    dot.classList.add('active');
+                    status.textContent = 'Online';
+                } else {
+                    dot.classList.remove('active');
+                    status.textContent = 'Offline';
+                }
+            } catch (error) {
+                console.log('Error updating status');
+            }
+        }
+
+        function updateSendButton() {
+            const input = document.getElementById('messageInput');
+            const btn = document.getElementById('sendBtn');
+            
+            if (input.value.trim()) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function addEmoji() {
+            const emojis = ['❤️', '💕', '💖', '💗', '💓', '💞', '💝', '😘', '😍', '🥰', '😊', '🤗', '💋', '🌹', '✨'];
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            const input = document.getElementById('messageInput');
+            input.value += randomEmoji;
+            input.focus();
+            updateSendButton();
+        }
+    </script>
+</body>
+</html>
